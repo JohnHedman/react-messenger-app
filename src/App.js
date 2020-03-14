@@ -10,7 +10,8 @@ class App extends Component {
       { name: 'Bry', age: 62 },
       { name: 'Ande', age: 22 }
     ],
-    otherState: 'another value'
+    otherState: 'another value',
+    showPersons: false
   };
 
   switchNameHandler = (newName) => {
@@ -34,25 +35,56 @@ class App extends Component {
     })
   }
 
+  togglePersonsHandler = () => {
+    const doesShow = this.state.showPersons;
+
+    // "Toggle" the showPersons (if true, change to false. If false, change to true)
+    this.setState({
+      showPersons: !doesShow
+    });
+  }
+
+  // This render function is ran when React believes it needs to be rerendered (after state changes, etc.)
   render() {
+    const style = {
+      backgroundColor: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+    };
+
+    // Figure out if the Person objects show be shown or not (based on if the button has been selected)
+    let persons = null;
+
+    /* Only render the Person objects when this.state.showPersons is true */
+    if (this.state.showPersons) {
+      persons = (
+        <div>
+          {
+            // For every person in the state.persons array should be rendered as a person object
+            this.state.persons.map(person => {
+              return <Person
+                name={person.name}
+                age={person.age}
+              />
+            })
+          }
+        </div>
+      );
+    }
+
     return (
       // Use 'className' to add css class instead of 'class' like normal html
       <div className="App">
         <h1>Hi, I am a React Application</h1>
         <p>This was made by Jonathan Hedman</p>
         {/* This might be tough on performance! */}
-        <button onClick={() => this.switchNameHandler('Jonathan')}>Switch Name</button>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age}/>
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age}
-          click={this.switchNameHandler.bind(this, 'Jonathan!')}
-          changed={this.nameChangedHandler}/>
-        <Person
-          name={this.state.persons[2].name}
-          age={this.state.persons[2].age}/>
+        <button
+          style={style}
+          onClick={this.togglePersonsHandler}>Toggle Persons</button>
+          {/* Display the persons variable that is defined above */}
+          {persons}
       </div>
     );
 
