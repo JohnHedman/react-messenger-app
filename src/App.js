@@ -13,14 +13,7 @@ class App extends Component {
     otherState: 'another value'
   };
 
-  // Using ES6 function syntax allows us to use this.var when function is referenced.
-  // This change of state is only allowed in class based components.
   switchNameHandler = (newName) => {
-    // console.log('Was clicked!');
-
-    // Can't reference the state directly - Don't do this.
-    // this.state.persons[0].name = 'Jonathan';
-
     // This will leave the this.otherState alone.  Only changes the values that are directly referenced.
     this.setState({
       persons: [
@@ -31,6 +24,15 @@ class App extends Component {
     })
   }
 
+  nameChangedHandler = (event) => {
+    this.setState({
+      persons: [
+        { name: 'John', age: 23 },
+        { name: event.target.value, age: 62 },
+        { name: 'Andrea', age: 82 }
+      ]
+    })
+  }
 
   render() {
     return (
@@ -38,14 +40,16 @@ class App extends Component {
       <div className="App">
         <h1>Hi, I am a React Application</h1>
         <p>This was made by Jonathan Hedman</p>
-        <button onClick={this.switchNameHandler.bind(this, "Jonathan")}>Switch Name</button>
+        {/* This might be tough on performance! */}
+        <button onClick={() => this.switchNameHandler('Jonathan')}>Switch Name</button>
         <Person
           name={this.state.persons[0].name}
           age={this.state.persons[0].age}/>
         <Person
           name={this.state.persons[1].name}
           age={this.state.persons[1].age}
-          click={this.switchNameHandler.bind(this, "Jonathan!")}/>
+          click={this.switchNameHandler.bind(this, 'Jonathan!')}
+          changed={this.nameChangedHandler}/>
         <Person
           name={this.state.persons[2].name}
           age={this.state.persons[2].age}/>
