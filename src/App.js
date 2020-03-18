@@ -56,7 +56,8 @@ class App extends Component {
   // This render function is ran when React believes it needs to be rerendered (after state changes, etc.)
   render() {
     const style = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
@@ -84,14 +85,22 @@ class App extends Component {
           }
         </div>
       );
+      style.backgroundColor = 'red';
+    }
+
+    const classes = [];
+    if (this.state.persons.length <= 2 ){
+      classes.push('red'); //classes = ['red']
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push('bold'); //classes = ['red', 'bold']
     }
 
     return (
       // Use 'className' to add css class instead of 'class' like normal html
       <div className="App">
         <h1>Hi, I am a React Application</h1>
-        <p>This was made by Jonathan Hedman</p>
-        {/* This might be tough on performance! */}
+        <p className={classes.join(' ')}>This was made by Jonathan Hedman</p>
         <button
           style={style}
           onClick={this.togglePersonsHandler}>Toggle Persons</button>
@@ -99,11 +108,6 @@ class App extends Component {
           {persons}
       </div>
     );
-
-    // Stacking React.createElements
-    // Usually you would use jsx instead of nesting React.createElement (kind of cumbersome to nest)
-    // jsx code would compile to exactly this anyway
-    // return React.createElement("div", {className: "App"}, React.createElement("h1", null, "Hi, I'm a React App!"));
   }
 }
 
