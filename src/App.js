@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Radium from 'radium';
 import Person from './Person/Person';
 
 class App extends Component {
@@ -61,7 +62,11 @@ class App extends Component {
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
     };
 
     // Figure out if the Person objects show be shown or not (based on if the button has been selected)
@@ -86,6 +91,10 @@ class App extends Component {
         </div>
       );
       style.backgroundColor = 'red';
+      style[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black'
+      }
     }
 
     const classes = [];
@@ -112,4 +121,5 @@ class App extends Component {
 }
 
 // If you import this file, you will import this class (App).
-export default App;
+// Wrap our component in Radium to allow us to use more CSS features (such as pseudo-classes) in React.
+export default Radium(App);

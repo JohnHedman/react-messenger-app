@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Radium from 'radium';
 import './Person.css';
 
 // ES6 equivalent to function 'person'
@@ -13,4 +13,4 @@ const person = (props) => {
     )
 };
 
-export default person;
+export default Radium(person);
